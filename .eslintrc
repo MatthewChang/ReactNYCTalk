@@ -1,0 +1,86 @@
+{
+  "plugins": [
+    "prettier"
+  ],
+  "extends": [
+    "prettier"
+  ],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "mocha": true,
+    "jasmine": true
+  },
+  "rules": {
+    "prettier/prettier": ["error",{
+      "singleQuote": true,
+      "semi": false,
+      "printWidth": 100,
+      "trailingComma": "none"
+    }],
+    "valid-jsdoc": ["error", {
+      "requireReturn": true,
+      "requireReturnType": true,
+      "requireParamDescription": true,
+      "requireReturnDescription": true
+    }],
+    "require-jsdoc": "off",
+    "semi": ["error", "never"],
+    "arrow-body-style": ["error", "as-needed"],
+    "arrow-parens": ["error", "as-needed"],
+    "import/no-extraneous-dependencies": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "react/prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prefer-stateless-function": "off",
+    "react/jsx-no-bind":"off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "comma-dangle": "off",
+    "space-before-blocks": "off",
+    "no-multiple-empty-lines": ['error', {"max": 1, "maxBOF": 0, "maxEOF": 0}],
+    "class-methods-use-this": "off",
+    "react/require-default-props": "off",
+    "radix": "off",
+    "eqeqeq": "off",
+    "no-plusplus": "off",
+    "curly": "off",
+    "camelcase": "off",
+    "no-console": "off",
+    "jsx-a11y/img-redundant-alt": "off",
+    "react/no-unescaped-entities": "off",
+    "one-var-declaration-per-line": "off",
+    // we should probably have all of these on eventually
+    // removed for now so our code has a chance of passing lint
+    "no-confusing-arrow": "off",
+    "no-unused-vars": "off",
+    "react/forbid-prop-types": "off",
+    "func-names": "off",
+    "one-var": "off",
+    "import/prefer-default-export": "off",
+    "space-before-function-paren": "off",
+    "block-scoped-var": "off",
+    "global-require": "off",
+    "import/first": "off",
+    "consistent-return": "off",
+    "no-underscore-dangle": "off",
+    "import/no_mutable_exports": "off",
+    "jsx-a11y/img-has-alt": "off",
+    "import/newline-after-import": "off",
+    "default-case": "off",
+    "react/no-find-dom-node": "off",
+    "react/jsx-no-target-blank": "off",
+    "react/no-multi-comp": "off",
+    "vars-on-top": "off",
+    "max-len": "off",
+    "guard-for-in": "off",
+    "import/no-duplicates": "off",
+    "react/no-string-refs": "off",
+    "no-restricted-syntax": "off",
+    "no-param-reassign": "off",
+    "react/sort-comp": "off",
+    "import/no-mutable-exports": "off"
+  }
+}
