@@ -26,34 +26,23 @@ export function generateOrm(normalizrSchema, classExtensions) {
     const associations = entity.schema
 
     // array of names of associations
-    const associationNames = Object.keys(associations || {})
-
-    const assiciationType = key => {
-      switch (associations[key].constructor.name) {
-        case 'EntitySchema':
-          return 'Entity'
-        case 'Array':
-          return 'Array'
-        default:
-          return null
-      }
-    }
+    const associationNames = Object.keys(associations)
 
     const associationNamesToEntityNames = {}
 
     // Set association functions
     associationNames.forEach(name => {
       // If this association refers to another single object type
-      if (assiciationType(name) === 'Entity') {
+      if (associations[name] instanceof Array) {
+        // Find assocSchemaArrayName since name may not use same string as entities name
+        const assocSchemaArrayName = associations[name][0]._key
+        associationNamesToEntityNames[name] = assocSchemaArrayName
+      } else {
         // Find the entity name of the association
         // since name may not use same string as entity name
         const assocSchemaName = _.findKey(normalizrSchema, obj => obj === associations[name])
         associationNamesToEntityNames[name] = assocSchemaName
-      } else if (assiciationType(name) === 'Array') {
-        // Find assocSchemaArrayName since name may not use same string as entities name
-        const assocSchemaArrayName = associations[name][0]._key
-        associationNamesToEntityNames[name] = assocSchemaArrayName
-      } // Ignoring objects or other schema types
+      }
     })
 
     const entityClass = class {
@@ -97,11 +86,12 @@ const { selectors, entityClasses } = generateOrm(Schema, { comment })
 
 function proptypesFor(classes) {
   return _.mapValues(classes, klass => (props, propName, componentName) => {
-    if (!(props[propName] instanceof klass)) {
+    let val = props[propName]
+    if (!(val instanceof klass)) {
       return new Error(
         `Invalid prop \`${propName}\` supplied to \`${componentName}\`. Must be an ORM class of type '${
           klass.name
-        }' Validation failed.`
+        }' instead got '${val.constructor.name}'. Validation failed.`
       )
     }
     return undefined

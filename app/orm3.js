@@ -20,10 +20,12 @@ export function generateOrm(normalizrSchema) {
     const entityTableName = normalizrSchema[entityName]._key
 
     // associations for the current object type
+    // e.g. for a post the associations are author, and comments
     const associations = entity.schema
 
     // array of names of associations
-    const associationNames = Object.keys(associations || {})
+    // e.g. for a post the associationNames array is ["author","comments"]
+    const associationNames = Object.keys(associations)
 
     const entityClass = class {
       constructor(state, attrs) {
