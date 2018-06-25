@@ -34,6 +34,14 @@ const response = [
     },
     comments: [
       {
+        id: '250',
+        content: 'Thanks!',
+        user: {
+          id: '123',
+          name: 'Paul'
+        }
+      },
+      {
         id: '251',
         content: 'Your other post was nicer',
         user: {

@@ -5,7 +5,8 @@ export const post = new schema.Entity('posts')
 export const comment = new schema.Entity('comments')
 
 user.define({
-  posts: [post]
+  posts: [post],
+  comments: [comment]
 })
 
 post.define({

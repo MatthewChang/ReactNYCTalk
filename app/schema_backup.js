@@ -4,7 +4,7 @@ const userProcessStrategy = (value, parent, key) => {
   switch (key) {
     case 'author':
       return { ...value, posts: [parent.id] }
-    case 'commenter':
+    case 'user':
       return { ...value, comments: [parent.id] }
     default:
       return { ...value }
@@ -20,7 +20,9 @@ const userMergeStrategy = (entityA, entityB) => ({
 
 export const user = new schema.Entity(
   'users',
-  {},
+  {
+    comments: [comment]
+  },
   {
     mergeStrategy: userMergeStrategy,
     processStrategy: userProcessStrategy
@@ -30,7 +32,7 @@ export const user = new schema.Entity(
 export const comment = new schema.Entity(
   'comments',
   {
-    commenter: user
+    user: user
   },
   {
     processStrategy: (value, parent) => ({ ...value, post: parent.id })

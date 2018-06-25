@@ -6,7 +6,7 @@ import React from 'react'
 const Comment = ({ comment }) => (
   //<li style={{ color: comment.isSpam() ? 'red' : 'black' }}>
   <li>
-    {comment.content} - {comment.user().name}
+    {comment.content} - {comment.user.name}
   </li>
 )
 
@@ -18,15 +18,15 @@ Comment.propTypes = {
 const PostTable = ({ posts }) => {
   //console.log(posts)
   const rows = posts.map(post => {
-    const comments = post.comments.map(
-      comment =>
-        // console.log(comment);
-        // ehh things start to get gross here
-        // return <Comment key= name="test" value="body"/>;
-        null
-    )
+    //const comments = post.comments.map(
+    //comment =>
+    //// console.log(comment);
+    //// ehh things start to get gross here
+    //// return <Comment key= name="test" value="body"/>;
+    //null
+    //)
     // Stage 4
-    //const comments = post.comments().map(comment => <Comment key={comment.id} comment={comment} />)
+    const comments = post.comments.map(comment => <Comment key={comment.id} comment={comment} />)
     return (
       <div key={post.id}>
         <h1>Title: {post.title}</h1>

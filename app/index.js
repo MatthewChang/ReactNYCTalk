@@ -5,7 +5,7 @@ import { configureStore, history } from './store/configureStore'
 import Root from './containers/Root'
 import response from './response'
 import { normalize } from 'normalizr'
-import * as Schema from './schema'
+import * as Schema from './schema_backup'
 
 const initialState = {
   entities: normalize(response, [Schema.post]).entities
