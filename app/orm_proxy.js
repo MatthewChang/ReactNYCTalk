@@ -10,6 +10,7 @@ export function generateOrm(normalizrSchema) {
     const entityTableName = normalizrSchema[entityName]._key
     const associations = entity.schema
 
+    // Build the association name hash
     const associationNames = Object.keys(associations)
     const associationNamesToEntityNames = {}
     associationNames.forEach(name => {
@@ -25,11 +26,35 @@ export function generateOrm(normalizrSchema) {
     selectors[entityName] = (state, id) => {
       // create a copy of the raw entities values
       let rawAttributes = Object.assign({}, state.entities[entityTableName][id])
-      Object.keys(associations).forEach(key => {
-        let id = rawAttributes[key]
-        rawAttributes[key] = () => selectors[associationNamesToEntityNames[key]](state, id)
-      })
+      var handler = {
+        get: function(obj, key) {
+          if (associationNames.includes(key)) {
+            return selectors[associationNamesToEntityNames[key]](state, rawAttributes[key])
+          }
+          return obj[key]
+        }
+      }
+      return new Proxy(rawAttributes, handler)
+      //non proxy implementation
+      //Object.keys(associations).forEach(key => {
+      //let id = rawAttributes[key]
+      //rawAttributes[key] = () => selectors[associationNamesToEntityNames[key]](state, id)
+      //})
       return rawAttributes
+    }
+
+    selectors[entityName] = (state, id) => {
+      // create a copy of the raw entities values
+      let rawAttributes = Object.assign({}, state.entities[entityTableName][id])
+      var handler = {
+        get: function(obj, key) {
+          if (associationNames.includes(key)) {
+            return selectors[associationNamesToEntityNames[key]](state, rawAttributes[key])
+          }
+          return obj[key]
+        }
+      }
+      return new Proxy(rawAttributes, handler)
     }
 
     selectors[entityTableName] = (state, ids) => ids.map(id => selectors[entityName](state, id))
@@ -38,5 +63,4 @@ export function generateOrm(normalizrSchema) {
 }
 
 const selectors = generateOrm(Schema)
-// debugger;
 export default selectors

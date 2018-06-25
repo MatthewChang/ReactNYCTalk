@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types'
-import { PropTypes as SelectPropTypes } from '../orm6'
+import { PropTypes as SelectPropTypes } from '../orm_proptypes'
 import React from 'react'
 
-// Stage 4/5
 const Comment = ({ comment }) => (
   //<li style={{ color: comment.isSpam() ? 'red' : 'black' }}>
   <li>
@@ -16,16 +15,7 @@ Comment.propTypes = {
 }
 
 const PostTable = ({ posts }) => {
-  //console.log(posts)
   const rows = posts.map(post => {
-    //const comments = post.comments.map(
-    //comment =>
-    //// console.log(comment);
-    //// ehh things start to get gross here
-    //// return <Comment key= name="test" value="body"/>;
-    //null
-    //)
-    // Stage 4
     const comments = post.comments.map(comment => <Comment key={comment.id} comment={comment} />)
     return (
       <div key={post.id}>
@@ -44,7 +34,7 @@ PostTable.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object)
 }
 
-//// Stage 6
+//// When using proptypes
 //PostTable.propTypes = {
 //posts: PropTypes.arrayOf(SelectPropTypes.post)
 //}
